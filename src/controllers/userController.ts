@@ -1,0 +1,33 @@
+import { Request, Response } from "express";
+
+exports.getAllUsers=(req:Request,res:Response)=>{
+    res.status(500).json({
+        status:'error',
+        message:"That route is not yet defined"
+    })
+};
+exports.getUser=(req:Request,res:Response)=>{
+    res.status(500).json({
+        status:'error',
+        messeage:"That route is not yet defined"
+    })
+};
+exports.createUser=(req:Request,res:Response)=>{
+    res.status(500).json({
+        status:'error',
+        message:"That route is not yet defined"
+    })
+};
+
+exports.deleteUser=(req:Request,res:Response)=>{
+    res.status(500).json({
+        status:'error',
+        message:"That route is not yet defined"
+    })
+}
+exports.updateUser=(req:Request,res:Response)=>{
+    res.status(500).json({
+        status:'error',
+        messege:"That route is not yet defined"
+    })
+}
