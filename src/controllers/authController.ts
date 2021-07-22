@@ -3,24 +3,28 @@ import { TextEncoder } from "util";
 import {KeyLike} from "crypto";
 const jwt = require('jsonwebtoken')
 const User = require('../models/users')
+const { promisify}= require('util')
 
 const signToken = (id:string)=>{
     return jwt.sign({id},
-        process.env.JWT_SECRET,{
+        'hi-there',{
         expiresIn:"90d"
         })
 }
 
 exports.signup = async (req:Request,res:Response,next:NextFunction)=>{
+    console.log('eee')
     try{
         const newUser = await User.create(req.body)
         const id:string=newUser._id
        const token=signToken(id)
+        console.log('###Token',token)
         res.status(201).json({
             status: 'success',
             token,
             data: {
-                user: newUser
+                user: newUser,
+                token
             }
         })
     }
@@ -40,11 +44,13 @@ exports.login = async (req:Request,res:Response,next:NextFunction)=>{
             })
         }
         const user= await User.findOne({"email":email})
-       if(user.password===password){
-           console.log('$$',user);
-           console.log("OK!!!")
+        console.log(user,'!!!',await user ,'--',password)
+        //console.log('$$',user);
+        let token =''
+        if(user.password===password){
+           //console.log("OK!!!")
+           token=signToken(user._id)
        }
-        const token =''
         res.status(200).json({
             status:'success',
             token,
@@ -54,4 +60,15 @@ exports.login = async (req:Request,res:Response,next:NextFunction)=>{
         console.log(e)
     }
 
+}
+exports.protect =async (req:Request,res:Response,next:NextFunction)=>{
+let token;
+if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
+    token = req.headers.authorization.split(' ')[1]
+}
+//получаем массив категорий
+if(!token){
+    return next(new Error('Please login'))
+}
+    next()
 }

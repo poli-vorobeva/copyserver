@@ -1,5 +1,6 @@
 import {NextFunction, Request, Response} from "express";
 import Category from "../models/categories";
+import Translate from "../models/translate";
 //import category from '../models/categories'
 const fs = require('fs')
 exports.createNewCategory= async (req:Request,res:Response)=>{
@@ -49,7 +50,7 @@ exports.getAllCategories = async (req:Request,res:Response)=>{
 }
 exports.getCategory = async (req:Request,res:Response)=>{
   try{
-      const category =await Category.findOne({"name":req.params.path})
+      const category =await Category.findOne({"name":req.params.name})
       res.status(200).json({
       category,
         })

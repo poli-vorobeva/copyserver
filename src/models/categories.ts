@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
 
 const CategoriesSchema = mongoose.Schema({
-    id:Number,
-    path:{
-        type:String,
-        required:[true,'Category must have a name']
-    },
+   // id:Number,
+   //  path:{
+   //      type:String,
+   //      required:[true,'Category must have a name']
+   //  },
     name:{
         type:String,
         required:[true,'Category must have a name'],
@@ -15,6 +15,11 @@ const CategoriesSchema = mongoose.Schema({
         type:Array,
         required:[true,'Category must have an images']
     },
+    title:{
+        type:String,
+        required:[true,'Category must have a name'],
+        unique:true
+    }
 })
 const Category= mongoose.model('Category',CategoriesSchema)
 // const testCategory= new Category({
