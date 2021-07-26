@@ -62,15 +62,19 @@ exports.getCategory = async (req:Request,res:Response)=>{
   }
 }
 exports.updateCategory = async (req:Request,res:Response)=>{
+    console.log("BODY",req.body)
+    console.log('par',req.params.name)
     try{
-     const category =await Category.findOneAndUpdate({"name":req.params.path},req.body,{new:true})
+     const category =await Category.findOneAndUpdate({"name":req.params.name},req.body,{new:true})
 
         res.status(200).json({
-               body:req.body
-                })
+              data:{
+              category
+              }
+        })
     }catch(e){
      res.status(404).json({
-         stsatus:"fail",
+         status:"fail",
          message:e
      })
     }

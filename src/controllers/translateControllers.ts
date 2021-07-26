@@ -1,5 +1,6 @@
 import {Request, Response} from "express";
 import Translate from "../models/translate";
+import Image from "../models/images";
 
 exports.addTranslate=async(req:Request,res:Response)=>{
     try{
@@ -15,11 +16,19 @@ exports.addTranslate=async(req:Request,res:Response)=>{
     }
 }
 exports.getTranslate=async(req:Request,res:Response)=>{
+    console.log("REQPAR",req.params.word)
     try{
-        const word =await Translate.findOne({"word":req.body.word})
+        const translate =await Translate.findOne({"word":req.params.word})
+        console.log("$$$$$",req.params.word)
+        console.log('####',translate)
+        // res.write(res.json(), 'utf8', () => {
+        //     console.log("Writing string Data...");
+        // });
+        // res.end(' ok');
         res.status(200).json({
-            body:req.body
+            translate
         })
+        return res
     }catch(err){
         res.status(400).json({
             status:'fail',
